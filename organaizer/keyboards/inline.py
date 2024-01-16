@@ -15,11 +15,11 @@ def get_start_menu_keyboard():
     return keyboard_builder.as_markup()
 
 
-def get_meme_keyboard():  # Database, Postgres, only read
+def get_meme_keyboard():  # parsing, beautifulsoup
     keyboard_builder = InlineKeyboardBuilder()
 
     keyboard_builder.button(text="Back to menu", callback_data="back_to_menu")
-    keyboard_builder.button(text="Get random meme", callback_data="get_meme")
+    keyboard_builder.button(text="Get random meme", callback_data="get_random_meme")
 
     return keyboard_builder.as_markup()
 

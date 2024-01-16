@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, F
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import Command
 from config_reader import config
 from handlers import eng_memes, dictionary, skill_test, texts_for_reading
@@ -17,6 +17,7 @@ async def main():
 
     dp.message.register(start, Command(commands=["start"]))
     dp.callback_query.register(eng_memes.get_meme, F.data == "get_random_meme")
+    dp.callback_query.register(eng_memes.get_meme, F.data == "back_to_menu")  # need to fix
 
     await dp.start_polling(bot)
 
