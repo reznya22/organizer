@@ -8,6 +8,7 @@ from handlers import eng_memes, dictionary, skill_test, texts_for_reading
 from keyboards.inline import get_start_menu_keyboard
 
 bot = Bot(token=config.bot_token.get_secret_value(), parse_mode="HTML")
+start_logo = "https://en.wikipedia.org/wiki/Flag_of_the_United_Kingdom#/media/File:Flag_of_the_United_Kingdom_(1-2).svg"
 
 
 async def main():
@@ -17,7 +18,7 @@ async def main():
 
     dp.message.register(start, Command(commands=["start"]))
     dp.callback_query.register(eng_memes.get_meme, F.data == "get_random_meme")
-    dp.callback_query.register(eng_memes.get_meme, F.data == "back_to_menu")  # need to fix
+    dp.callback_query.register(eng_memes.back_to_menu, F.data == "back_to_menu")
 
     await dp.start_polling(bot)
 
@@ -25,7 +26,7 @@ async def main():
 async def start(message: Message, keyboard=get_start_menu_keyboard):
     await bot.send_photo(
         message.chat.id,
-        photo="https://en.wikipedia.org/wiki/Flag_of_the_United_Kingdom#/media/File:Flag_of_the_United_Kingdom_(1-2).svg",
+        photo=start_logo,
         reply_markup=keyboard(),
         caption="Вас приветствует English Bot! Выберете приложение:",
     )

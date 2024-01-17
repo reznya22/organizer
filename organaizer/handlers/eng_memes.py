@@ -5,7 +5,9 @@ import random
 from time import sleep
 from aiogram.types import CallbackQuery, Message
 from organaizer.keyboards.inline import get_meme_keyboard, get_start_menu_keyboard
-from organaizer import bot
+from organaizer.bot import bot as b
+from organaizer.bot import start_logo
+from aiogram.types import InputMediaPhoto
 
 
 async def get_meme(callback: CallbackQuery):
@@ -16,9 +18,19 @@ async def get_meme(callback: CallbackQuery):
         soup = BeautifulSoup(response.text, "html.parser")
         memes = soup.find_all("div", class_="subbuzz__media--full-width-container")
         for _ in memes:
-            return str(memes[random.randint(0, 100)].find("img")["src"])
+            previous_message_id = callback.message.message_id
+            return str(memes[random.randint(0, 99)].find("img")["src"]), previous_message_id
 
-    await callback.message.answer(parser(), reply_markup=get_meme_keyboard())
+    data = parser()
+    await b.edit_message_media(media=InputMediaPhoto(media=data[0]), chat_id=callback.message.chat.id,
+                               message_id=data[1], reply_markup=get_meme_keyboard())
+    await callback.answer()
 
+
+async def back_to_menu(callback: CallbackQuery):
+    await b.edit_message_media(media=InputMediaPhoto(media=start_logo,
+                               caption="Вас приветствует English Bot! Выберете приложение:"),
+                               chat_id=callback.message.chat.id, message_id=callback.message.message_id,
+                               reply_markup=get_start_menu_keyboard())
     await callback.answer()
 
