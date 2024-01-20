@@ -1,5 +1,4 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram import types
 
 
 def get_start_menu_keyboard():
@@ -18,7 +17,7 @@ def get_start_menu_keyboard():
 def get_meme_keyboard():  # parsing, beautifulsoup
     keyboard_builder = InlineKeyboardBuilder()
 
-    keyboard_builder.button(text="Back to menu", callback_data="back_to_menu")
+    keyboard_builder.button(text="Back to menu", callback_data="back_to_menu_from_eng_memes")
     keyboard_builder.button(text="Get random meme", callback_data="get_random_meme")
 
     return keyboard_builder.as_markup()
@@ -33,6 +32,9 @@ def get_random_text_keyboard():  # parsing, beautifulsoup
 
 
 def get_dictionary_keyboard():  # Database, Postgres, read, update and delete
-    pass
+    keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text="Add word", callback_data="add_word")
+    keyboard_builder.button(text="Back to menu", callback_data="back_to_menu_from_dict")  # add all words view button
 
+    return keyboard_builder.as_markup()
 
